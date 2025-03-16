@@ -1,0 +1,17 @@
+.marquee {
+    white-space: nowrap; /* Không xuống dòng */
+    display: inline-block;
+    animation: marquee 10s linear infinite; /* 10s di chuyển từ phải qua trái */
+    position: relative;
+}
+
+@keyframes marquee {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+

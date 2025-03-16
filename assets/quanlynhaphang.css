@@ -1,0 +1,64 @@
+body {
+    background-color: #f8f9fa;
+}
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #343a40;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    padding-top: 20px;
+}
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 12px 20px;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+}
+.sidebar a:hover {
+    background: #495057;
+    padding-left: 25px;
+}
+.sidebar a i {
+    transition: transform 0.3s;
+}
+.sidebar a:hover i {
+    transform: rotate(10deg);
+}
+.admin-info {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+.admin-info:hover {
+    transform: scale(1.05);
+}
+.admin-info img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.5);
+    transition: box-shadow 0.3s ease-in-out;
+}
+.admin-info:hover img {
+    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.9);
+}
+.admin-info span {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: white;
+    margin-left: 10px;
+}
+.main-content {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    height: 100vh;
+    overflow-y: auto;
+}

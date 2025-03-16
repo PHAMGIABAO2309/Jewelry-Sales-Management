@@ -1,0 +1,138 @@
+/* Định dạng chung */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #667eea, #764ba2);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container chính */
+.login-container {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    width: 400px;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Tiêu đề */
+h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-transform: uppercase;
+}
+
+/* Form */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Nhóm label và input ngay hàng nhau */
+label {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: left;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+/* Input fields */
+input {
+    width: calc(100% - 20px);
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.8);
+    color: black;
+    margin-bottom: 15px;
+    transition: 0.3s;
+}
+
+/* Hover và focus */
+input:focus {
+    background: white;
+    outline: none;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+/* Nút đăng nhập */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    background: #ff7eb3;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    text-transform: uppercase;
+}
+
+button:hover {
+    background: #ff3d77;
+    transform: scale(1.05);
+}
+
+/* Liên kết đăng ký */
+p {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+p a {
+    color: #ff7eb3;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+/* Thông báo */
+.alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    opacity: 0.9;
+    display: block;
+    z-index: 1000;
+}
+
+.alert.success {
+    background-color: #4CAF50; /* Xanh lá */
+    color: white;
+}
+
+.alert.error {
+    background-color: #f44336; /* Đỏ */
+    color: white;
+}
+
+/* Hiệu ứng fade-in */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
