@@ -4,8 +4,22 @@ include '../actions/danhmuc.php';
 include '../actions/dropdownbosuutap.php'; 
 include '../actions/dropdowndongtrangsuc.php';
 include '../actions/dropdownloaisanpham.php';
-include  '../actions/maitramnam.php';
+include '../actions/dropdowndathang.php';
 include '../actions/mota.php';
+
+// Kiểm tra xem maCTDM có được truyền vào hay không
+if (isset($_GET['maCTDM'])) {
+    $maCTDM = $_GET['maCTDM'];
+    // Truy vấn sản phẩm thuộc danh mục được chọn
+    $sql = "SELECT MaSP, TenSP, Gia, SoLuong FROM SANPHAM WHERE MaCTDM = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $maCTDM);
+    $stmt->execute();
+    $result = $stmt->get_result();
+} else {
+    echo "<p>Không có danh mục nào được chọn.</p>";
+    exit;
+}
 ?>
 
 <html lang="en">
@@ -16,13 +30,13 @@ include '../actions/mota.php';
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
   <link rel="icon" type="image/png" href="../images/logo.jpg">
-
   <link rel="stylesheet" href="../assets/navbar.css">
   <script src="../handle/dropdownprofile.js"></script>
   <script src="../handle/dropdownbosuutap.js"></script>
   <script src="../handle/dropdowndongtrangsuc.js"></script>
   <script src="../handle/dropdownloaisanpham.js"></script>
-    <script src="../handle/dropdownchat.js"></script>
+  <script src="../handle/dropdownchat.js"></script>
+  <script src="../handle/dropdowndathang.js"></script>
 </head>
  <body class="bg-white text-black">
     <header class="flex items-center justify-between p-4 bg-gray-100">
@@ -40,10 +54,11 @@ include '../actions/mota.php';
                 <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
             </div>
 
-            <?php if (isset($_SESSION['user_name'])): ?>
+            <?php if (isset($_SESSION['user_name']) && isset($_SESSION['user_id'])): ?>
                 <a id="userDropdown" class="flex items-center space-x-1 cursor-pointer" href="#">
                     <i class="fas fa-user"></i>
                     <span><?= $_SESSION['user_name']; ?></span>
+                    <!-- <small>ID<?= $_SESSION['user_id']; ?></small> Hiển thị ID -->
                 </a>
                 <?php include '../actions/dropdownprofile.php'; ?>
                 <a class="flex items-center space-x-1 text-red-500" href="../actions/logout.php"><i class="fas fa-sign-out-alt"></i><span>Đăng Xuất</span></a>
@@ -73,7 +88,14 @@ include '../actions/mota.php';
                             <div class="relative">
                                 <div class="absolute bottom-0 left-0 w-full opacity-0 translate-y-full transition-all duration-300 ease-in-out group-hover:translate-y-0 group-hover:opacity-100">
                                     <div class="flex justify-around py-4 bg-white shadow-lg rounded">
-                                        <button class="text-gray-700 hover:text-black"><i class="fas fa-shopping-cart"></i></button>
+                                        <button  class="menuorder text-gray-700 hover:text-gray" 
+                                            data-masp="<?= htmlspecialchars($row['MaSP']) ?>" 
+                                            data-tensp="<?= htmlspecialchars($row['TenSP']) ?>" 
+                                            data-soluongsp="<?= $row['SoLuong'] ?>"
+                                            data-gia="<?= $row['Gia'] ?>"
+                                            data-mand="<?= $_SESSION['user_id']; ?>">
+                                            <i class="fas fa-shopping-cart hover:text-red-500 " title="Thêm vào giỏ hàng"></i>
+                                        </button>
                                         <button class="text-gray-700 hover:text-black"><i class="fas fa-heart"></i></button>
                                         <button class="text-gray-700 hover:text-black"><i class="fas fa-shopping-bag"></i></button>
                                     </div>
@@ -94,7 +116,7 @@ include '../actions/mota.php';
             <button id="menuchat" class="bg-red-600 text-white p-4 rounded-full shadow-lg"><i class="fas fa-comments"></i></button> 
         </div>
         <?php include '../actions/dropdownchat.php'; ?>
-
     </main>
+    
  </body>
 </html>

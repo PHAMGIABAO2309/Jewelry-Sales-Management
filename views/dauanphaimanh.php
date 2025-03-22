@@ -4,8 +4,21 @@ include '../actions/danhmuc.php';
 include '../actions/dropdownbosuutap.php'; 
 include '../actions/dropdowndongtrangsuc.php';
 include '../actions/dropdownloaisanpham.php';
-include '../actions/dauanphaimanh.php';
+include '../actions/dropdowndathang.php';
 include '../actions/mota.php';
+// Kiểm tra xem maCTDM có được truyền vào hay không
+if (isset($_GET['maCTDM'])) {
+    $maCTDM = $_GET['maCTDM'];
+    // Truy vấn sản phẩm thuộc danh mục được chọn
+    $sql = "SELECT MaSP, TenSP, Gia, SoLuong FROM SANPHAM WHERE MaCTDM = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $maCTDM);
+    $stmt->execute();
+    $result = $stmt->get_result();
+} else {
+    echo "<p>Không có danh mục nào được chọn.</p>";
+    exit;
+}
 ?>
 
 <html lang="en">
@@ -21,6 +34,8 @@ include '../actions/mota.php';
   <script src="../handle/dropdownbosuutap.js"></script>
   <script src="../handle/dropdowndongtrangsuc.js"></script>
   <script src="../handle/dropdownloaisanpham.js"></script>
+  <script src="../handle/dropdownchat.js"></script>
+  <script src="../handle/dropdowndathang.js"></script>
 </head>
  <body class="bg-white text-black">
     <header class="flex items-center justify-between p-4 bg-gray-100">
@@ -59,32 +74,46 @@ include '../actions/mota.php';
                 <p class="text-gray-700 text-base max-w-2xl mx-auto"><?= $_SESSION['MoTaDauAnPhaiManh']; ?></p>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 p-4">
-                <?php while ($row = $result->fetch_assoc()): ?>
-                    <div class="bg-white p-4 rounded shadow group  overflow-hidden">
+            <?php while ($row = $result->fetch_assoc()): ?>
+                    <div class="bg-white p-4 rounded shadow group overflow-hidden">
                         <div>
-                            <a href="../details/detailsdauanphaimanh.php?MaSP=<?= urlencode($row['MaSP']) ?>">
-                            <img alt="<?= htmlspecialchars($row['TenSP']) ?>" 
-                                class="w-full h-auto " height="300" src="../images/<?= htmlspecialchars($row['MaSP']) ?>.jpg" width="300"/>
+                            <a href="../details/detailsmaitramnam.php?MaSP=<?= urlencode($row['MaSP']) ?>">
+                                <img alt="<?= htmlspecialchars($row['TenSP']) ?>" 
+                                    class="w-full h-auto cursor-pointer" height="300" 
+                                    src="../images/<?= htmlspecialchars($row['MaSP']) ?>.jpg" width="300"/>
                             </a>
-                                <!-- Hiệu ứng hover từ đáy ảnh lên -->
-                             <div class="relative">
+                            <!-- Hiệu ứng hover từ đáy ảnh lên -->
+                            <div class="relative">
                                 <div class="absolute bottom-0 left-0 w-full opacity-0 translate-y-full transition-all duration-300 ease-in-out group-hover:translate-y-0 group-hover:opacity-100">
                                     <div class="flex justify-around py-4 bg-white shadow-lg rounded">
-                                        <button class="text-gray-700 hover:text-black"><i class="fas fa-shopping-cart"></i></button>
+                                        <button  class="menuorder text-gray-700 hover:text-black" 
+                                            data-masp="<?= htmlspecialchars($row['MaSP']) ?>" 
+                                            data-tensp="<?= htmlspecialchars($row['TenSP']) ?>" 
+                                            data-soluongsp="<?= $row['SoLuong'] ?>"
+                                            data-gia="<?= $row['Gia'] ?>"
+                                            data-mand="<?= $_SESSION['user_id']; ?>">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </button>
                                         <button class="text-gray-700 hover:text-black"><i class="fas fa-heart"></i></button>
                                         <button class="text-gray-700 hover:text-black"><i class="fas fa-shopping-bag"></i></button>
                                     </div>
                                 </div>
-                             </div>
+                            </div>
                         </div>
-                        <a href="../details/detailsdauanphaimanh.php?MaSP=<?= urlencode($row['MaSP']) ?>">
-                        <h2 class="text-lg font-semibold text-center" ><?= htmlspecialchars($row['TenSP']) ?></h2>
+                        <a href="../details/detailsmaitramnam.php?MaSP=<?= urlencode($row['MaSP']) ?>">
+                            <h2 class="text-lg font-semibold text-center cursor-pointer"><?= htmlspecialchars($row['TenSP']) ?></h2>
                         </a>
-                        <p class="text-black font-bold text-center" style="color:red;"><?= number_format($row['Gia'], 0, ',', '.') ?> VNĐ</p>
+                        <p class="text-black font-bold text-center" style="color:red;">
+                            <?= number_format($row['Gia'], 0, ',', '.') ?> VNĐ
+                        </p>
                     </div>
                 <?php endwhile; ?>
             </div>
         </div>
+        <div class="fixed bottom-4 right-4">
+            <button id="menuchat" class="bg-red-600 text-white p-4 rounded-full shadow-lg"><i class="fas fa-comments"></i></button> 
+        </div>
+        <?php include '../actions/dropdownchat.php'; ?>
     </main>
 </body>
 </html>

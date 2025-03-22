@@ -22,7 +22,7 @@ $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        echo "<tr class='text-center'>";
+        echo "<tr class='text-center hover:bg-blue-300 transition'>";
         echo "<td class='px-4 py-2'>{$row['MaSP']}</td>";
         echo "<td class='px-4 py-2'>{$row['TenSP']}</td>";
         echo "<td class='px-4 py-2'>" . number_format($row['Gia'], 0, ',', '.') . " VND</td>";

@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Kiểm tra thông tin đăng nhập
-    $stmt = $conn->prepare("SELECT MaND, TenND, MatKhau, NgaySinh, avt FROM nguoidung WHERE Email = ?");
+    $stmt = $conn->prepare("SELECT MaND, TenND, MatKhau, NgaySinh,DiaChi, avt FROM nguoidung WHERE Email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -26,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_email'] = $email; // Lưu email vào session
             $_SESSION['user_dob'] = $user['NgaySinh']; // Lưu ngày sinh vào session
             $_SESSION['user_avt'] = $user['avt']; // Lưu avatar vào session
+            $_SESSION['user_diachi'] = $user['DiaChi'];
 
             // Lưu thông báo đăng nhập thành công
             $_SESSION['message'] = "Đăng nhập thành công!";

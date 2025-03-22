@@ -4,6 +4,7 @@ include '../database/connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = trim($_POST['name']);
+    $fullname = trim($_POST['fullname']);
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
     if (isset($_POST['dob']) && !empty($_POST['dob'])) {
@@ -66,8 +67,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // Thêm vào CSDL
-    $sql = $conn->prepare("INSERT INTO nguoidung (MaND, TenND, Email, MatKhau, NgaySinh, DiaChi, Phai) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $sql->bind_param("sssssss", $newMaND, $name, $email, $hashed_password, $dob, $address, $gender);
+    $sql = $conn->prepare("INSERT INTO nguoidung (MaND, TenND, Email, MatKhau, NgaySinh, DiaChi, Phai, HoTen) VALUES (?, ?, ?, ?, ?, ?, ?,?)");
+    $sql->bind_param("ssssssss", $newMaND, $name, $email, $hashed_password, $dob, $address, $gender,$fullname);
     
 
     if ($sql->execute()) {

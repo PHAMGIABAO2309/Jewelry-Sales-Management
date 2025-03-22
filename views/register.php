@@ -12,9 +12,16 @@
         <h2>Đăng Ký Tài Khoản</h2>
         <form action="../actions/register.php" method="POST">
             
+            
+
+            <div class="form-group">
+                <label for="name">Tên Đăng Nhập:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
             <div class="form-group">
                 <label for="name">Họ và Tên:</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="fullname" required>
             </div>
 
             <div class="form-group">

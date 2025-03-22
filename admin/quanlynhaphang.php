@@ -22,6 +22,7 @@ $tongSoLuong = $row_total['TongSoLuong'] ?? 0; // Nếu không có sản phẩm,
     <title>Quản lý nhập hàng</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../assets/quanlynhaphang.css">
 </head>
@@ -37,12 +38,12 @@ $tongSoLuong = $row_total['TongSoLuong'] ?? 0; // Nếu không có sản phẩm,
             </div>
             <a href="admin.php"><i class="fas fa-tachometer-alt me-2"></i> Tổng quan</a>
             <a href="#"><i class="fas fa-cogs me-2"></i> Quản lý hệ thống</a>
-            <a href="#"><i class="fas fa-users me-2"></i> Quản lý người dùng</a>
-            <a href="#"><i class="fas fa-boxes me-2"></i> Quản lý sản phẩm</a>
+            <a href="quanlytaikhoan.php"><i class="fas fa-users me-2"></i> Quản lý tài khoản</a>
+            <a href="quanlysanpham.php"><i class="fas fa-boxes me-2"></i> Quản lý sản phẩm</a>
             <a href="quanlynhaphang.php"><i class="fas fa-truck-loading me-2"></i> Quản lý nhập hàng</a>
             <a href="#"><i class="fas fa-shopping-cart me-2"></i> Quản lý đơn hàng</a>
             <a href="quanlychat.php"><i class="fas fa-comments me-2"></i> Chat với KH</a>
-            <a href="#"><i class="fas fa-chart-bar me-2"></i> Thống kê</a>
+            <a href="doanhthu.php"><i class="fas fa-chart-bar me-2"></i> Thống kê doanh thu</a>
             <a href="#"><i class="fas fa-bell me-2"></i> Thông báo</a>
             <a href="#"><i class="fas fa-cogs me-2"></i> Cài đặt</a>
             <a href="#"><i class="fas fa-sign-out-alt me-2"></i> Đăng xuất</a>
@@ -61,23 +62,25 @@ $tongSoLuong = $row_total['TongSoLuong'] ?? 0; // Nếu không có sản phẩm,
                             </div>
                             <div class="d-flex align-items-center mb-3">
                                 <label for="loai-hang" class="form-label me-2">Loại hàng:</label>
-                                <select id="loai-hang" class="form-select form-select-sm" style="max-width: 200px; margin-left: 70px;">
+                                <select id="loai-hang" name="loai-hang" class="form-select form-select-sm" style="max-width: 200px; margin-left: 70px;">
                                     <option value="">--Chọn loại hàng--</option>
                                     <?php while ($row = $result->fetch_assoc()) { ?>
                                         <option value="<?= $row['MaCTDM'] ?>"><?= $row['TenCTDM'] ?></option>
                                     <?php } ?>
                                 </select>
-                                <button class="btn btn-primary btn-sm ms-2"><i class="fas fa-sync-alt"></i></button>
                             </div>
                             
                             <div class="d-flex align-items-center mb-3">
                                 <label for="ten-san-pham" class="form-label me-2">Nhập tên sản phẩm:</label>
-                                <input type="text" id="ten-san-pham" class="form-control form-control-sm" style="max-width: 250px;">
+                                <input type="text" id="ten-san-pham" name="ten-san-pham" class="form-control form-control-sm" style="max-width: 250px;">
                             </div>
                             
-                            <div class="d-flex align-items-center">
-                                <p class="text-gray-700">Tổng số lượng sản phẩm của <span id="ten-danh-muc" class="font-bold text-red-500">Tất cả loại hàng</span> là : <span id="tong-so-luong" class="font-bold text-red-500"><?php echo number_format($tongSoLuong); ?></span></p>
+                            <div class="d-flex align-items-center mb-3">
+                                <label for="so-luong" class="form-label me-2">Nhập số lượng:</label>
+                                <input type="number" id="so-luong" name="so-luong"  class="form-control form-control-sm ml-9" style="max-width: 200px;">
                             </div>
+
+                            
                         </div>
 
                         <!-- Cột bên phải -->
@@ -90,28 +93,32 @@ $tongSoLuong = $row_total['TongSoLuong'] ?? 0; // Nếu không có sản phẩm,
                                 </div>
                             </div>
                             <div class="d-flex align-items-center mb-3">
+                                <p class="text-gray-700">Tổng số lượng sản phẩm của <span id="ten-danh-muc" class="font-bold text-red-500">Tất cả loại hàng</span> là : <span id="tong-so-luong" class="font-bold text-red-500"><?php echo number_format($tongSoLuong); ?></span></p>
+                            </div>
+                            
+                            <div class="d-flex align-items-center mb-3">
                                 <label for="ngay-nhap" class="form-label me-2">Ngày Nhập:</label>
-                                <input type="text" id="ngay-nhap" class="form-control form-control-sm ml-14" style="max-width: 200px;" placeholder="DD/MM/YYYY">
+                                <input type="text" id="ngay-nhap" name="ngay-nhap" class="form-control form-control-sm ml-14" style="max-width: 200px;" placeholder="DD/MM/YYYY">
                             </div>
 
                             <div class="d-flex align-items-center mb-3">
                                 <label for="gia-san-pham" class="form-label me-2">Nhập Giá Sản Phẩm:</label>
-                                <input type="number" id="gia-san-pham" class="form-control form-control-sm" style="max-width: 200px;">
+                                <input type="number" id="gia-san-pham" name="gia-san-pham" class="form-control form-control-sm" style="max-width: 200px;">
                             </div>
+                            
                             <div class="d-flex align-items-center mb-3">
-                                <label for="so-luong" class="form-label me-2">Nhập số lượng:</label>
-                                <input type="number" id="so-luong" class="form-control form-control-sm ml-9" style="max-width: 200px;">
-                                <button class="btn btn-primary btn-sm ms-3">Tải ảnh sản phẩm</button>
+                                <label for="anh-san-pham" class="form-label me-2">Tải ảnh sản phẩm:</label>
+                                <input type="file"  class="form-control form-control-sm">
                             </div>
                         </div>
+                        
                     </div>
                     <div class="flex justify-between items-center">
                         <h2 class="text-xl font-bold text-gray-700 mb-3">Thông tin sản phẩm:</h2>
                         <div class="flex items-center space-x-5 mb-3">
-                            <button class="bg-gray-200 text-gray-700 p-2 rounded text-lg">➕</button> <!-- Thêm -->
-                            <button class="bg-gray-200 text-gray-700 p-2 rounded text-lg">💾</button> <!-- Lưu -->
+                            <button class="btnthem bg-gray-200 text-gray-700 p-2 rounded text-lg">➕</button> <!-- Thêm -->
+                            <button class="btnluu bg-gray-200 text-gray-700 p-2 rounded text-lg">💾</button> <!-- Lưu -->
                             <button class="bg-gray-200 text-gray-700 p-2 rounded text-lg">♻️</button> <!-- Cập nhật -->
-                            <button class="bg-gray-200 text-gray-700 p-2 rounded text-lg">↩️</button> <!-- Hoàn tác -->
                         </div>
                     </div>
 
@@ -132,11 +139,82 @@ $tongSoLuong = $row_total['TongSoLuong'] ?? 0; // Nếu không có sản phẩm,
                             </tbody>
                             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                             <script>
+    document.querySelector(".btnluu").addEventListener("click", function () {
+    let maSP = document.getElementById("ma-san-pham").value.trim();
+    let tenSP = document.getElementById("ten-san-pham").value.trim();
+    let giaSP = document.getElementById("gia-san-pham").value.trim();
+    let maCTDM = document.getElementById("loai-hang").value.trim();
+    let soLuong = document.getElementById("so-luong").value.trim();
+    let ngayNhap = document.getElementById("ngay-nhap").value.trim();
+    let fileInput = document.querySelector("input[type='file']");
+    let file = fileInput.files[0]; // Lấy file ảnh
+
+    if (!maSP || !tenSP || !giaSP || !maCTDM || !soLuong || !ngayNhap || !file) {
+        alert("Vui lòng nhập đầy đủ thông tin!");
+        return;
+    }
+
+    let formData = new FormData();
+    formData.append("maSP", maSP);
+    formData.append("tenSP", tenSP);
+    formData.append("giaSP", giaSP);
+    formData.append("maCTDM", maCTDM);
+    formData.append("soLuong", soLuong);
+    formData.append("ngayNhap", ngayNhap);
+    formData.append("file", file);
+
+    fetch("../handlenhaphang/insert_sanpham.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        alert(data);
+        location.reload(); // Tải lại trang sau khi lưu thành công
+    })
+    .catch(error => console.error("Lỗi:", error));
+});
+
+</script>
+<script>
+document.querySelector("input[type='file']").addEventListener("change", function () {
+    let maSP = document.getElementById("ma-san-pham").value.trim();
+    if (!maSP) {
+        alert("Vui lòng nhập Mã sản phẩm trước khi chọn ảnh!");
+        this.value = ""; // Xóa file đã chọn nếu chưa có MaSP
+        return;
+    }
+
+    let file = this.files[0];
+    if (file) {
+        let fileName = maSP + ".jpg"; // Đặt tên file theo MaSP
+        let newFile = new File([file], fileName, { type: file.type });
+
+        let dataTransfer = new DataTransfer();
+        dataTransfer.items.add(newFile);
+        this.files = dataTransfer.files; // Gán file mới vào input
+
+        // Gửi file lên server ngay lập tức
+        let formData = new FormData();
+        formData.append("file", newFile);
+        formData.append("maSP", maSP);
+
+        fetch("../handlenhaphang/upload_image.php", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => console.log(data))
+        .catch(error => console.error("Lỗi:", error));
+    }
+});
+</script>
+                            <script>
                                 $(document).ready(function () {
                                    
                                     // Tải toàn bộ sản phẩm khi trang load lần đầu
                                 $.ajax({
-                                    url: '../actions/load_products.php',
+                                    url: '../handlenhaphang/load_products.php',
                                     type: 'POST',
                                     success: function (response) {
                                         $('#product-list').html(response);
@@ -151,7 +229,7 @@ $tongSoLuong = $row_total['TongSoLuong'] ?? 0; // Nếu không có sản phẩm,
                                     var maCTDM = $(this).val(); // Lấy giá trị MaCTDM
 
                                     $.ajax({
-                                        url: '../actions/load_products.php', // File xử lý AJAX
+                                        url: '../handlenhaphang/load_products.php', // File xử lý AJAX
                                         type: 'POST',
                                         data: { MaCTDM: maCTDM },
                                         success: function (response) {
@@ -162,7 +240,6 @@ $tongSoLuong = $row_total['TongSoLuong'] ?? 0; // Nếu không có sản phẩm,
                                         }
                                     });
                                 });
-
                                     // Xử lý sự kiện click vào hàng trong bảng
                                     $("#table-sanpham tbody").on("click", "tr", function () {
                                         // Xóa màu xanh của tất cả các hàng trước khi tô màu hàng mới
@@ -191,7 +268,7 @@ $tongSoLuong = $row_total['TongSoLuong'] ?? 0; // Nếu không có sản phẩm,
                                 document.getElementById('loai-hang').addEventListener('change', function() {
                                     var maCTDM = this.value;
 
-                                    fetch('../actions/get_tongsoluong.php?MaCTDM=' + maCTDM)
+                                    fetch('../handlenhaphang/get_tongsoluong.php?MaCTDM=' + maCTDM)
                                         .then(response => response.json())
                                         .then(data => {
                                             document.getElementById('ten-danh-muc').textContent = data.TenCTDM;
@@ -202,7 +279,7 @@ $tongSoLuong = $row_total['TongSoLuong'] ?? 0; // Nếu không có sản phẩm,
                             </script>
                             <script>
                                 document.addEventListener("DOMContentLoaded", function () {
-                                    const btnThem = document.querySelector("button.bg-gray-200"); // Nút thêm
+                                    const btnThem = document.querySelector("button.btnthem"); // Nút thêm
                                     const inputMaSP = document.getElementById("ma-san-pham");
                                     const inputLoaiHang = document.getElementById("loai-hang");
                                     const inputTenSP = document.getElementById("ten-san-pham");
@@ -211,10 +288,9 @@ $tongSoLuong = $row_total['TongSoLuong'] ?? 0; // Nếu không có sản phẩm,
                                     const inputGiaSP = document.getElementById("gia-san-pham");
                                     const inputSoLuong = document.getElementById("so-luong");
                                     const productList = document.getElementById("product-list");
-                                    
 
                                     btnThem.addEventListener("click", function () {
-                                        fetch("../actions/get_latest_masp.php")
+                                        fetch("../handlenhaphang/get_latest_masp.php")
                                             .then(response => response.text())
                                             .then(maSP => {
                                                 inputMaSP.value = "SP" + String(maSP).padStart(3, '0'); // Format SP001, SP002,...
@@ -235,7 +311,6 @@ $tongSoLuong = $row_total['TongSoLuong'] ?? 0; // Nếu không có sản phẩm,
                                     });
                                 });
                             </script>
-
                         </table>
                     </div>
                 </div>

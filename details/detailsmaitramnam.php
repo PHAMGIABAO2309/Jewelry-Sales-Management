@@ -59,6 +59,7 @@ if (isset($_GET['MaSP'])) {
   <script src="../handle/dropdownbosuutap.js"></script>
   <script src="../handle/dropdowndongtrangsuc.js"></script>
   <script src="../handle/dropdownloaisanpham.js"></script>
+  <script src="../handle/dropdownchat.js"></script>
 </head>
  <body class="bg-white text-black">
     <header class="flex items-center justify-between p-4 bg-gray-100">
@@ -106,8 +107,7 @@ if (isset($_GET['MaSP'])) {
                             </button>
                         <?php endif; ?>
                     </div>
-
-                    <?php if ($hasThumbnails): ?>
+                    <?php if ($hasThumbnails): ?>  
                         <div class="flex justify-center mt-4">
                             <?php foreach ($imageArray as $index => $img): ?>
                                 <img alt="Thumbnail <?= $index ?>" class="border p-1 mx-1 thumbnail" height="50" src="<?= $img ?>" width="50"/>
@@ -115,55 +115,6 @@ if (isset($_GET['MaSP'])) {
                         </div>
                     <?php endif; ?>
                 </div>
-                <script>
-                    let imageArray = <?= json_encode($imageArray) ?>;
-                    let currentIndex = 0; // Ảnh chính hiện tại
-                    const mainImage = document.getElementById("mainImage");
-                    const prevBtn = document.getElementById("prevBtn");
-                    const nextBtn = document.getElementById("nextBtn");
-                    const thumbnails = document.querySelectorAll(".thumbnail");
-
-                    // Hàm cập nhật ảnh chính
-                    function updateMainImage() {
-                        mainImage.src = imageArray[currentIndex];
-                        updateThumbnailBorder();
-                    }
-
-                    // Hàm cập nhật viền của ảnh nhỏ
-                    function updateThumbnailBorder() {
-                        thumbnails.forEach((thumb, index) => {
-                            if (index === currentIndex) {
-                                thumb.classList.add("border-2", "border-blue-500");
-                            } else {
-                                thumb.classList.remove("border-2", "border-blue-500");
-                            }
-                        });
-                    }
-
-                    // Xử lý click vào ảnh nhỏ
-                    thumbnails.forEach((thumb, index) => {
-                        thumb.addEventListener("click", () => {
-                            currentIndex = index;
-                            updateMainImage();
-                        });
-                    });
-
-                    // Xử lý click Next
-                    nextBtn.addEventListener("click", () => {
-                        currentIndex = (currentIndex + 1) % imageArray.length;
-                        updateMainImage();
-                    });
-
-                    // Xử lý click Prev
-                    prevBtn.addEventListener("click", () => {
-                        currentIndex = (currentIndex - 1 + imageArray.length) % imageArray.length;
-                        updateMainImage();
-                    });
-
-                    // Đặt viền cho ảnh đầu tiên khi load trang
-                    updateThumbnailBorder();
-                </script>
-
                 <div class="w-full lg:w-1/2 mt-8 lg:mt-0 lg:ml-8">
                     <h1 class="text-2xl font-bold text-gray-900"><?= $TenSP ?></h1>
                     <p class="text-gray-500 mt-2">Giá tham khảo</p>
@@ -174,8 +125,8 @@ if (isset($_GET['MaSP'])) {
                     </div>
                     <p class="text-gray-500 mt-2">Giá tham khảo sẽ thay đổi theo giá vàng, trọng lượng vàng và giá trị viên đá thực tế.</p>
                     <div class="flex mt-4">
-                        <button class="bg-red-600 text-white px-4 py-2 rounded mr-2">GỬI TIN NHẮN</button>
-                        <button class="bg-white text-red-600 border border-red-600 px-4 py-2 rounded">Đặt hàng</button>
+                        <button id="menuchat" class="bg-red-600 text-white px-4 py-2 rounded mr-2">GỬI TIN NHẮN</button>
+                        <!-- <button class="bg-white text-red-600 border border-red-600 px-4 py-2 rounded" id="menuorder">Đặt hàng</button> -->
                     </div>
                     <div class="mt-6">
                         <h3 class="text-gray-700 font-semibold">CHI TIẾT</h3>
@@ -192,10 +143,52 @@ if (isset($_GET['MaSP'])) {
             <div class="text-center text-gray-500 mt-8">
                 <p>Trang Chủ · Dòng Trang Sức · Vàng · DVNUTVV0001Q786</p>
             </div>
-            <div class="fixed bottom-4 right-4">
-                <button class="bg-red-600 text-white p-4 rounded-full shadow-lg"><i class="fas fa-comments"></i></button>
-            </div>
         </div>
+        
+        <?php include '../actions/dropdownchat.php'; ?>
     </main>
+    
+<script>
+    let imageArray = <?= json_encode($imageArray) ?>;
+    let currentIndex = 0; // Ảnh chính hiện tại
+    const mainImage = document.getElementById("mainImage");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const thumbnails = document.querySelectorAll(".thumbnail");
+    // Hàm cập nhật ảnh chính
+    function updateMainImage() {
+        mainImage.src = imageArray[currentIndex];
+        updateThumbnailBorder();
+    }
+    // Hàm cập nhật viền của ảnh nhỏ
+    function updateThumbnailBorder() {
+        thumbnails.forEach((thumb, index) => {
+            if (index === currentIndex) {
+                thumb.classList.add("border-2", "border-blue-500");
+            } else {
+                thumb.classList.remove("border-2", "border-blue-500");
+            }
+        });
+    }
+    // Xử lý click vào ảnh nhỏ
+    thumbnails.forEach((thumb, index) => {
+        thumb.addEventListener("click", () => {
+            currentIndex = index;
+            updateMainImage();
+        });
+    });
+    // Xử lý click Next
+    nextBtn.addEventListener("click", () => {
+        currentIndex = (currentIndex + 1) % imageArray.length;
+        updateMainImage();
+    });
+    // Xử lý click Prev
+    prevBtn.addEventListener("click", () => {
+        currentIndex = (currentIndex - 1 + imageArray.length) % imageArray.length;
+        updateMainImage();
+    });
+    // Đặt viền cho ảnh đầu tiên khi load trang
+    updateThumbnailBorder();
+</script>
 </body>
 </html>    

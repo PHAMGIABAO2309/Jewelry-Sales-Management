@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const menuBoSuuTap = document.getElementById("menuchat"); // Bộ sưu tập
+    const menuBoSuuTap = document.getElementById("menuchat");
+    const menuBoSuuTapp = document.getElementById("menuchatt"); // Bộ sưu tập
     const dropdown = document.getElementById("dropdownchat"); // Dropdown
     const closeDropdown = document.getElementById("closeDropdown"); // Nếu có nút đóng khác
     const closeChat = document.getElementById("closechat"); // Nút đóng chat
@@ -32,7 +33,34 @@ document.addEventListener("DOMContentLoaded", function () {
                 dropdown.classList.add("hidden");
             }
         });
-    } else {
-        console.error("Không tìm thấy phần tử menuBoSuuTap hoặc dropdown.");
-    }
+    } 
+    if (menuBoSuuTapp && dropdown) {
+        menuBoSuuTapp.addEventListener("click", function (event) {
+            event.stopPropagation(); // Ngăn chặn sự kiện lan ra ngoài
+            dropdown.classList.toggle("hidden");
+        });
+
+        // Xử lý nút đóng dropdown (nếu có)
+        if (closeDropdown) {
+            closeDropdown.addEventListener("click", function (event) {
+                event.stopPropagation();
+                dropdown.classList.add("hidden");
+            });
+        }
+
+        // Xử lý nút đóng chat
+        if (closeChat) {
+            closeChat.addEventListener("click", function (event) {
+                event.stopPropagation();
+                dropdown.classList.add("hidden");
+            });
+        }
+
+        // Ẩn dropdown khi click ra ngoài
+        document.addEventListener("click", function (event) {
+            if (!dropdown.contains(event.target) && !menuBoSuuTapp.contains(event.target)) {
+                dropdown.classList.add("hidden");
+            }
+        });
+    } 
 });
