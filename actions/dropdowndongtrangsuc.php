@@ -9,7 +9,7 @@ if (!$result) {
 }
 ?>
 
-<div id="dropdowndongtrangsuc" class="absolute left-40 top-[50px] w-60 bg-white shadow-lg rounded-lg overflow-hidden hidden">
+<div id="dropdowndongtrangsuc" class="absolute left-40 top-[50px] w-60 bg-white shadow-lg rounded-lg overflow-hidden hidden z-10">
     <div class="p-4">
         <ul class="space-y-2">
             <?php 

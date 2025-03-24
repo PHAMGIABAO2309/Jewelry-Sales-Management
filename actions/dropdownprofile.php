@@ -26,7 +26,7 @@ if ($tongChiTieu >= 500000000) {
 }
 ?>
 
-<div id="dropdownMenu" class=" absolute right-4 mt-1 w-80  top-[46px] bg-white shadow-lg rounded-lg overflow-hidden hidden">
+<div id="dropdownMenu" class=" absolute right-4 mt-1 w-80  top-[46px] bg-white shadow-lg rounded-lg overflow-hidden hidden z-[10]">
     <div class="p-4 bg-yellow-100 flex items-start justify-between">
         <div class="flex items-center">
             <img alt="User avatar" class="w-10 h-10 rounded-full mr-3" height="40"
@@ -55,7 +55,7 @@ if ($tongChiTieu >= 500000000) {
             <li class="flex items-center text-gray-800"><i class="fas fa-bell mr-3"></i><span>Thông báo (0)</span></li>
             <li class="flex items-center text-gray-800"><i class="fas fa-key mr-3"></i><span>Đổi mật khẩu</span></li>
             <li class="flex items-center text-gray-800"><i class="fas fa-cog mr-3"></i><span>Cài đặt </span></li>
-            <li class="flex items-center text-gray-800"><i class="fas fa-sign-out-alt mr-3"></i><span>Đăng xuất</span></li>
+            <li class="flex items-center text-gray-800" onclick="window.location.href='../actions/logout.php';"><i class="fas fa-sign-out-alt mr-3"></i><span>Đăng xuất</span></li>
         </ul>
     </div>
 </div>

@@ -8,7 +8,7 @@ if (!$result) {
 }
 ?>
 
-<div id="dropdownloaisanpham" class="absolute left-80 top-[50px] w-60 bg-white shadow-lg rounded-lg overflow-hidden hidden">
+<div id="dropdownloaisanpham" class="absolute left-80 top-[50px] w-60 bg-white shadow-lg rounded-lg overflow-hidden hidden z-10">
     <div class="p-4">
         <ul class="space-y-2">
             <?php 
@@ -27,7 +27,6 @@ if (!$result) {
                             <span>' . $tenCTDM . '</span>
                         </li>';
                 }
-                
             }
             ?>
         </ul>

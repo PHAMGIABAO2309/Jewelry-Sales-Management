@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th3 15, 2025 lúc 03:01 PM
+-- Thời gian đã tạo: Th3 23, 2025 lúc 05:25 AM
 -- Phiên bản máy phục vụ: 9.1.0
 -- Phiên bản PHP: 8.2.12
 
@@ -39,9 +39,9 @@ CREATE TABLE `chitietdanhmuc` (
 --
 
 INSERT INTO `chitietdanhmuc` (`MaCTDM`, `TenCTDM`, `MaDM`, `MoTa`) VALUES
-('CTDM01', 'Mai trăm năm', 'DM01', 'Mai vàng trong sắc xuân mang theo những niềm vui và hứng khởi, đó cũng chính là cảm hứng trong bộ trang sức cưới Mai Trăm Năm. Với ý nghĩa vui tươi và ý niệm khởi đầu hạnh phúc, trang sức Mai Trăm Năm đồng hành cùng cặp đôi uyên ương trong ngày hỷ sự.\r\n'),
+('CTDM01', 'Mai Trăm Năm', 'DM01', 'Mai vàng trong sắc xuân mang theo những niềm vui và hứng khởi, đó cũng chính là cảm hứng trong bộ trang sức cưới Mai Trăm Năm. Với ý nghĩa vui tươi và ý niệm khởi đầu hạnh phúc, trang sức Mai Trăm Năm đồng hành cùng cặp đôi uyên ương trong ngày hỷ sự.'),
 ('CTDM02', 'Giao thời 2024', 'DM01', 'Cảm hứng từ sắc màu của ánh sáng, từng giác cắt CNC phô diễn sự lộng lẫy trong mỗi tuyệt tác trang sức GIAO THỜI. Bộ sưu tập là kết tinh của vẻ đẹp, sự nỗ lực hướng về phía trước của phái đẹp hiện đại – những người phụ nữ xinh đẹp – độc lập và tự tin.'),
-('CTDM03', 'Dấu ấn phái mạnh 2024', 'DM01', 'Phái Mạnh sau những nỗ lực đương đầu thử thách, hoàn thiện bản thân mỗi ngày với tôn chỉ lịch thiệp, bản lĩnh và thành công. Trên nấc thang vững chãi ấy, trang sức nam Bảo Gold chính là ngôn ngữ thay lời khẳng định vị thế của những Quý Ông thời đại.'),
+('CTDM03', 'Dấu ấn phái mạnh 2024', 'DM01', 'Phái Mạnh sau những nỗ lực đương đầu thử thách, hoàn thiện bản thân mỗi ngày với tôn chỉ lịch thiệp, bản lĩnh và thành công. Trên nấc thang vững chãi ấy, trang sức nam NTJ chính là ngôn ngữ thay lời khẳng định vị thế của những Quý Ông thời đại.'),
 ('CTDM04', 'Giáp Thìn phú quý', 'DM01', 'Đánh dấu một cột mốc 2024 thuận lợi và may mắn, gói trọn những hy vọng về một năm thịnh vượng, phát đạt qua những tuyệt tác dành riêng cho dịp vía Thần Tài 2024.'),
 ('CTDM05', 'Magical stone', 'DM01', '“Bữa tiệc” ánh sáng từ đá Swarovski lấp lánh cùng hiệu ứng chuyển động bắt mắt, Magical Stone là phiên bản trang sức đặc biệt cùng nàng khuấy đảo mùa lễ hội cuối năm.'),
 ('CTDM06', 'Bách phúc trường an', 'DM01', 'Dung hòa giữa dòng chảy thời trang và văn hóa Đông Phương, BST khắc họa dấu ấn thiết kế hiện đại pha trộn cảm hứng truyền thống, biểu trưng cho dung mạo quý phái, lan tỏa phúc khí và may mắn của những quý cô.'),
@@ -79,7 +79,26 @@ CREATE TABLE `danhmuc` (
 INSERT INTO `danhmuc` (`MaDM`, `TenDM`) VALUES
 ('DM01', 'Bộ sưu tập'),
 ('DM02', 'Dòng trang sức'),
-('DM03', 'Loại sản phẩm');
+('DM03', 'Loại sản phẩm'),
+('DM05', 'Liên hệ'),
+('DM06', 'Hỗ trợ'),
+('DM07', 'Gọi điện');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `giohang`
+--
+
+CREATE TABLE `giohang` (
+  `MaGH` varchar(191) NOT NULL,
+  `MaND` varchar(255) DEFAULT NULL,
+  `MaSP` varchar(255) DEFAULT NULL,
+  `TenSP` varchar(255) DEFAULT NULL,
+  `Gia` decimal(18,2) NOT NULL,
+  `SoLuong` int NOT NULL,
+  `TongTien` decimal(18,2) NOT NULL
+) ;
 
 -- --------------------------------------------------------
 
@@ -95,19 +114,23 @@ CREATE TABLE `nguoidung` (
   `NgaySinh` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `DiaChi` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `Phai` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
-  `avt` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL
+  `avt` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `HoTen` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `nguoidung`
 --
 
-INSERT INTO `nguoidung` (`MaND`, `TenND`, `MatKhau`, `Email`, `NgaySinh`, `DiaChi`, `Phai`, `avt`) VALUES
-('Admin', 'GiaBaoJewelry', '123456', 'baojewelry@gmail.com', NULL, 'Mỹ Tho', 'Nam', NULL),
-('ND01', 'PhamGiaBao', '123456', 'bao@gmail.com', '2004-09-23', 'My Tho', 'Nam', 'images/67d18743a1c34.jpg'),
-('ND02', 'HuynhThanhSang', '123456', 'sang@gmail.com', '2004-12-01', 'Bến Tre', 'Nam', 'images/67d582f8b194a.jpg'),
-('ND03', 'PhuocThien', '123456', 'thien@gmail.com', '2001-01-01', 'My Tho', 'Nam', 'images/67d582dc10f89.jpg'),
-('ND04', 'LongPhi', '123456', 'phi@gmail.com', '2001-01-01', 'Bến Tre', 'Nam', NULL);
+INSERT INTO `nguoidung` (`MaND`, `TenND`, `MatKhau`, `Email`, `NgaySinh`, `DiaChi`, `Phai`, `avt`, `HoTen`) VALUES
+('Admin', 'GiaBaoJewelry', '123456', 'baojewelry@gmail.com', NULL, 'Mỹ Tho', 'Nam', NULL, 'Admin'),
+('ND01', 'PhamGiaBao', '123456', 'bao@gmail.com', '2004-09-23', 'My Tho', 'Nam', 'images/67de88e2016a4.jpg', 'Phạm Gia Bảo'),
+('ND02', 'HuynhThanhSang', '123456', 'sang@gmail.com', '2004-12-01', 'Bến Tre', 'Nam', 'images/67d582f8b194a.jpg', 'Huỳnh Thanh Sang'),
+('ND03', 'PhuocThien', '123456', 'thien@gmail.com', '2001-01-01', 'My Tho', 'Nam', 'images/67d582dc10f89.jpg', 'Nguyễn Hoàng Phước Thiện'),
+('ND04', 'LongPhi', '123456', 'phi@gmail.com', '2001-01-01', 'Bến Tre', 'Nam', NULL, 'Huỳnh Nguyễn Long Phi'),
+('ND05', 'VoHoangYNhi', '123456', 'ynhi@gmail.com', '2004-12-23', 'Đà Nẵng', 'Nữ', 'images/67de88fdf02c8.jpg', 'Võ Hoàng Ý Nhi'),
+('ND06', 'khanhhuyen', '123456', 'khanhhuyen@gmail.com', '2005-10-16', 'Bà Rịa', 'Nữ', 'images/67de8939ed594.jpg', 'Tôn Trương Khánh Huyền'),
+('ND07', 'nguyenvanan', '123456', 'vanan@gmail.com', '2003-07-18', 'Bình Thuận', 'Nam', 'images/67de894f9c440.jpg', 'Nguyễn Văn An');
 
 -- --------------------------------------------------------
 
@@ -164,7 +187,8 @@ INSERT INTO `sanpham` (`MaSP`, `TenSP`, `Gia`, `MaCTDM`, `LinkAnh`, `SoLuong`, `
 ('SP264', 'Nhẫn nữ Đá màu Swarovski Vàng ta 990 DWNODTA0000P575', 29776000.00, 'CTDM19', 'Bông tai Đá màu Swarovski Vàng trắng DWBOTTT0100I594.jpg', 1, '0000-00-00'),
 ('SP265', 'Nhẫn nữ Đá màu tổng hợp Vàng trắng DMNUETT0000Q097', 5670000.00, 'CTDM19', 'Nhẫn nam Đá màu tổng hợp Vàng 18K DMNAEVV0300J538.jpg', 5, '0000-00-00'),
 ('SP266', 'Nhẫn nữ Cẩm thạch Vàng 18K DTNULVV0000R390', 23435000.00, 'CTDM19', 'Nhẫn nam Đá màu tổng hợp Vàng 18K DMNAEVV0300J538.jpg', 1, '0000-00-00'),
-('SP267', 'Nhẫn nữ Cẩm thạch Vàng 18K DTNOLVV0000I804', 23435000.00, 'CTDM19', 'Nhẫn nam Đá màu tổng hợp Vàng 18K DMNAEVV0300J538.jpg', 1, '0000-00-00');
+('SP267', 'Nhẫn nữ Cẩm thạch Vàng 18K DTNOLVV0000I804', 23435000.00, 'CTDM19', 'Nhẫn nam Đá màu tổng hợp Vàng 18K DMNAEVV0300J538.jpg', 1, '0000-00-00'),
+('SP268', 'bbb', 2.00, 'CTDM02', 'images/SP268.jpg', 22, '2007-09-24');
 
 -- --------------------------------------------------------
 
@@ -297,7 +321,60 @@ INSERT INTO `tinnhan` (`MaTN`, `MaNguoiGui`, `MaNguoiNhan`, `NoiDung`, `ThoiGian
 ('TN100', 'ND02', 'Admin', 'huy', '2025-03-15 13:40:53'),
 ('TN100', 'ND02', 'Admin', 'Mai vàng trong sắc xuân mang theo những niềm vui và hứng khởi, đó cũng chính là cảm hứng trong bộ trang sức cưới Mai Trăm Năm. Với ý nghĩa vui tươi và ý niệm khởi đầu hạnh phúc, trang sức Mai Trăm Năm đồng hành cùng cặp đôi uyên ương trong ngày hỷ sự.', '2025-03-15 13:43:05'),
 ('TN100', 'ND02', 'Admin', 'chà', '2025-03-15 13:47:56'),
-('TN100', 'ND02', 'Admin', 'QUẨY', '2025-03-15 13:57:42');
+('TN100', 'ND02', 'Admin', 'QUẨY', '2025-03-15 13:57:42'),
+('TN100', 'Admin', 'ND01', 'ngủ thoi', '2025-03-15 14:02:11'),
+('TN100', 'Admin', 'ND02', 'hí', '2025-03-15 14:02:36'),
+('TN100', 'Admin', 'ND02', 'kk', '2025-03-16 02:24:02'),
+('TN100', 'ND02', 'Admin', 'kk', '2025-03-16 02:24:10'),
+('TN100', 'ND01', 'Admin', 'hi', '2025-03-17 04:42:05'),
+('TN100', 'ND01', 'Admin', 'kk', '2025-03-17 22:12:52'),
+('TN100', 'ND01', 'Admin', 'CREATE TABLE giohang (     MaGH VARCHAR(191) PRIMARY KEY,     MaND VARCHAR(191), -- ID người dùng (nếu có đăng nhập)     MaSP VARCHAR(191), -- Đảm bảo giống kiểu dữ liệu với sanpham.MaSP     TenSP VARCHAR(255),     Gia DECIMAL(18,2) NOT NULL CHECK (Gia > 0),     SoLuong INT NOT NULL CHECK (SoLuong > 0),     TongTien DECIMAL(18,2) NOT NULL CHECK (TongTien > 0),     FOREIGN KEY (MaSP) REFERENCES sanpham(MaSP) ON DELETE CASCADE,     FOREIGN KEY (MaND) REFERENCES nguoidung(MaND) ON DELETE CASCADE )', '2025-03-18 12:02:27'),
+('TN100', 'ND01', 'Admin', 'tr', '2025-03-19 02:19:50'),
+('TN100', 'ND01', 'Admin', 'haiz', '2025-03-19 02:20:30'),
+('TN100', 'Admin', 'ND01', 'sao z', '2025-03-19 02:21:19'),
+('TN100', 'ND01', 'Admin', 'kaka', '2025-03-19 02:34:15'),
+('TN100', 'ND01', 'Admin', 'hi', '2025-03-19 02:34:34'),
+('TN100', 'ND01', 'Admin', 'hay', '2025-03-19 02:44:45'),
+('TN100', 'ND02', 'Admin', 'hi', '2025-03-19 13:12:45'),
+('TN100', 'Admin', 'ND01', 'a', '2025-03-22 10:00:35');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `xuathang`
+--
+
+CREATE TABLE `xuathang` (
+  `MaSP` varchar(255) DEFAULT NULL,
+  `SoLuong` int DEFAULT NULL,
+  `TongTien` decimal(10,0) DEFAULT NULL,
+  `NgayXuatHang` datetime DEFAULT CURRENT_TIMESTAMP,
+  `MaND` varchar(255) DEFAULT NULL,
+  `MaPhieuXuat` varchar(20) DEFAULT NULL,
+  `PhuongThucThanhToan` varchar(255) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `xuathang`
+--
+
+INSERT INTO `xuathang` (`MaSP`, `SoLuong`, `TongTien`, `NgayXuatHang`, `MaND`, `MaPhieuXuat`, `PhuongThucThanhToan`) VALUES
+('SP01', 2, 92908000, '2025-03-19 00:00:00', 'ND02', 'HD01', 'Thanh toán khi nhận hàng'),
+('SP03', 2, 92908000, '2025-03-19 21:32:24', 'ND02', 'HD02', 'Thanh toán tiền mặt'),
+('SP03', 5, 232270000, '2025-03-19 21:32:48', 'ND02', 'HD03', 'Thanh toán tiền mặt'),
+('SP04', 1, 9590000, '2025-03-19 21:32:48', 'ND02', 'HD03', 'Thanh toán tiền mặt'),
+('SP14', 1, 20699000, '2025-03-20 20:00:09', 'ND02', 'HD04', 'Thanh toán tiền mặt'),
+('SP15', 1, 31040000, '2025-03-20 20:00:09', 'ND02', 'HD04', 'Thanh toán tiền mặt'),
+('SP02', 1, 11991400, '2025-03-20 20:22:07', 'ND02', 'HD05', 'Thanh toán tiền mặt'),
+('SP03', 2, 92908000, '2025-03-20 20:22:07', 'ND02', 'HD05', 'Thanh toán tiền mặt'),
+('SP25', 2, 43878000, '2025-03-21 19:03:04', 'ND05', 'HD06', 'Thanh toán tiền mặt'),
+('SP22', 5, 262975000, '2025-03-21 19:03:04', 'ND05', 'HD06', 'Thanh toán tiền mặt'),
+('SP05', 5, 232000000, '2025-03-21 19:03:04', 'ND05', 'HD06', 'Thanh toán tiền mặt'),
+('SP18', 3, 68997000, '2025-03-21 19:03:04', 'ND05', 'HD06', 'Thanh toán tiền mặt'),
+('SP04', 2, 19180000, '2025-03-21 19:03:04', 'ND05', 'HD06', 'Thanh toán tiền mặt'),
+('SP04', 1, 9590000, '2025-03-22 13:58:33', 'ND01', 'HD07', 'Thanh toán tiền mặt'),
+('SP16', 2, 50638000, '2025-03-22 14:01:29', 'ND06', 'HD08', 'Thanh toán tiền mặt'),
+('SP23', 2, 307364000, '2025-03-22 14:02:45', 'ND03', 'HD09', 'Thanh toán tiền mặt');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -315,6 +392,14 @@ ALTER TABLE `chitietdanhmuc`
 --
 ALTER TABLE `danhmuc`
   ADD PRIMARY KEY (`MaDM`);
+
+--
+-- Chỉ mục cho bảng `giohang`
+--
+ALTER TABLE `giohang`
+  ADD PRIMARY KEY (`MaGH`),
+  ADD KEY `MaSP` (`MaSP`(250)),
+  ADD KEY `MaND` (`MaND`(250));
 
 --
 -- Chỉ mục cho bảng `nguoidung`
@@ -335,6 +420,13 @@ ALTER TABLE `sanpham`
 ALTER TABLE `tinnhan`
   ADD KEY `MaNguoiGui` (`MaNguoiGui`(250)),
   ADD KEY `MaNguoiNhan` (`MaNguoiNhan`(250));
+
+--
+-- Chỉ mục cho bảng `xuathang`
+--
+ALTER TABLE `xuathang`
+  ADD KEY `MaSP` (`MaSP`(250)),
+  ADD KEY `MaND` (`MaND`(250));
 
 --
 -- Các ràng buộc cho các bảng đã đổ

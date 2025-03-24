@@ -11,6 +11,7 @@ include '../managerchat/listchat.php';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/admins.css">
+    <link rel="icon" type="image/png" href="../images/logo.jpg">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../handle/dropdownchatadmin.js"></script>
 </head>
@@ -25,16 +26,16 @@ include '../managerchat/listchat.php';
                 </div>
             </div>
             <a href="admin.php"><i class="fas fa-tachometer-alt me-2"></i> Tổng quan</a>
-            <a href="#"><i class="fas fa-cogs me-2"></i> Quản lý hệ thống</a>
+            <a href="quanlydanhmuc.php"><i class="fas fa-list me-2"></i> Quản lý danh mục</a>
+            <a href="chitietdanhmuc.php"><i class="fas fa-list-alt me-2"></i> Quản lý chi tiết danh mục</a>
             <a href="quanlytaikhoan.php"><i class="fas fa-users me-2"></i> Quản lý tài khoản</a>
             <a href="quanlysanpham.php"><i class="fas fa-boxes me-2"></i> Quản lý sản phẩm</a>
             <a href="quanlynhaphang.php"><i class="fas fa-truck-loading me-2"></i> Quản lý nhập hàng</a>
-            <a href="#"><i class="fas fa-shopping-cart me-2"></i> Quản lý đơn hàng</a>
+            <a href="quanlydonhang.php"><i class="fas fa-shopping-cart me-2"></i> Quản lý đơn hàng</a>
             <a href="quanlychat.php"><i class="fas fa-comments me-2"></i> Chat với KH</a>
-            <a href="doanhthu.php"><i class="fas fa-chart-bar me-2"></i> Thống kê doanh thu</a>
-            <a href="#"><i class="fas fa-bell me-2"></i> Thông báo</a>
-            <a href="#"><i class="fas fa-cogs me-2"></i> Cài đặt</a>
-            <a href="#"><i class="fas fa-sign-out-alt me-2"></i> Đăng xuất</a>
+            <a href="doanhthu.php"><i class="fas fa-chart-line me-2"></i> Thống kê doanh thu</a>
+            <a href="../actions/logout.php"><i class="fas fa-store me-2"></i> Trang bán hàng</a>
+            <a href="../views/login.php"><i class="fas fa-sign-out-alt me-2"></i> Đăng xuất</a>
         </div>
         <!-- Main Content -->
         <div class="flex-grow-1 p-4">

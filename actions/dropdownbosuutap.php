@@ -1,7 +1,7 @@
 <?php
 include dirname(__DIR__) . '/database/connect.php';
 
-// Truy vấn danh sách TenCTDM từ bảng chitietdanhmuc
+// Truy vấn danh sách TenCTDM từ bảng chitietdanhmuc thuoôộc 1 Danh mucục
 $sql = "SELECT MaCTDM, TenCTDM FROM chitietdanhmuc WHERE MaDM = 'DM01'";
 $result = $conn->query($sql);
 if (!$result) {
@@ -9,7 +9,7 @@ if (!$result) {
 }
 ?>
 
-<div id="dropdownbosuutap" class="absolute left-4 top-[50px] w-60 bg-white shadow-lg rounded-lg overflow-hidden hidden">
+<div id="dropdownbosuutap" class="absolute left-4 top-[50px] w-60 bg-white shadow-lg rounded-lg overflow-hidden hidden z-10">
     <div class="p-4">
         <ul class="space-y-2">
             <?php 
