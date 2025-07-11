@@ -20,31 +20,34 @@ include '../actions/dropdownloaisanpham.php';
   <script src="../handle/dropdowndongtrangsuc.js"></script>
   <script src="../handle/dropdownloaisanpham.js"></script>
   <script src="../handle/dropdownthanhtoan.js"></script>
+  <link rel="stylesheet" href="../css/donhang.css">
 </head>
  <body class="bg-white text-black flex flex-col h-screen">
     <header class="flex items-center justify-between p-4 bg-gray-100 w-full fixed top-0 left-0 ">
         <!-- Logo và Danh mục sản phẩm -->
         <div class="flex items-center space-x-4 relative">
             <a href="../views/home.php">
-                <img alt="Logo" class="h-8 " height="30" src="https://storage.googleapis.com/a1aa/image/RR8CRsz-B4mwtszDDQi_5Jz4xLoLiQOI1N6dCsXCOP0.jpg" width="30"/>
+                <img id="logo" alt="Logo" class="h-16 w-16 rounded-full" src="../images/logo.jpg"/>
             </a>
             <div class="relative"><?php echo getDanhMuc($conn); ?></div>
         </div>
         <!-- Ô tìm kiếm + Thông tin user -->
         <div class="flex items-center space-x-4 ml-auto">
             <div class="relative">
-                <input class="border rounded-full p-2 w-96 pl-10" placeholder="Tìm Sản Phẩm: Ví dụ: kiềng, dây chuyền..." type="text" />
-                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <form method="GET" action="../views/timkiem.php" class="w-full">
+                    <input name="search" class="border rounded-full p-2 w-96 pl-10 mt-2" placeholder="Tìm Sản Phẩm: Ví dụ: kiềng, dây chuyền..." type="text" />
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 mt-[-4px]"></i>
+                </form>
             </div>
 
             <?php if (isset($_SESSION['user_name']) && isset($_SESSION['user_id'])): ?>
-                <a id="userDropdown" class="flex items-center space-x-1 cursor-pointer" href="#">
+                <a id="userDropdown" class="flex items-center space-x-1 cursor-pointer mt-[-10px]" href="#">
                     <i class="fas fa-user"></i>
                     <span><?= $_SESSION['user_name']; ?></span>
                     <!-- <small>ID<?= $_SESSION['user_id']; ?></small> Hiển thị ID -->
                 </a>
                 <?php include '../actions/dropdownprofile.php'; ?>
-                <a class="flex items-center space-x-1 text-red-500" href="../actions/logout.php"><i class="fas fa-sign-out-alt"></i><span>Đăng Xuất</span></a>
+                <a class="flex items-center space-x-1 text-red-500 mt-[-10px]" href="../actions/logout.php"><i class="fas fa-sign-out-alt"></i><span>Đăng Xuất</span></a>
             <?php else: ?>
                 <a class="flex items-center space-x-1" href="login.php"><i class="fas fa-user"></i><span>Đăng Nhập</span></a>
             <?php endif; ?>
@@ -190,42 +193,13 @@ include '../actions/dropdownloaisanpham.php';
         </div>
         <?php include '../donhang/dropdownthanhtoan.php'?>
     </main>
-
-    <script>
-document.getElementById('btnDatHang').addEventListener('click', function() {
-    let phuongThucTT = document.querySelector('.phuongthucthanhtoan').textContent.trim();
-
-    let formData = new FormData();
-    formData.append('phuongThucThanhToan', phuongThucTT);
-
-    fetch('../donhang/add_xuathang.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log("Server response:", data);
-        if (data.status === 'success') {
-            alert("Đặt hàng thành công! Mã phiếu xuất: " + data.maPhieuXuat);
-            window.location.href = "../dathang/dathang.php"; // Chuyển hướng sau khi đặt hàng
-        } else {
-            alert("Có lỗi xảy ra: " + data.message);
-        }
-    })
-    .catch(error => console.error("Fetch error:", error));
-});
-
-
-</script>
-    
-
     <!-- Footer -->
     <footer class="bg-gray-800 text-white fixed bottom-0 left-0 w-full shadow-md">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left p-2">
             <div>
                 <h4 class="font-bold text-lg mb-2">🏢 Về chúng tôi</h4>
                 <ul class="space-y-1 text-gray-300">
-                    <li>🏠 Trang Chủ</li>
+                    <li ><a href="../views/home.php">🏠 Trang Chủ</a></li>
                     <li>📰 Tin tức</li>
                 </ul>
             </div>
@@ -246,3 +220,41 @@ document.getElementById('btnDatHang').addEventListener('click', function() {
     </footer>
     </body>
 </html>
+<!-- Modal thông báo đặt hàng thành công -->
+<div id="successModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>🎉 Đặt hàng thành công!</h2>
+    <p id="orderCode">Mã phiếu xuất: <strong>PX0001</strong></p>
+    <button id="redirectBtn">Xem đơn hàng</button>
+  </div>
+</div>
+<script>
+document.getElementById('btnDatHang').addEventListener('click', function() {
+    let phuongThucTT = document.querySelector('.phuongthucthanhtoan').textContent.trim();
+    let formData = new FormData();
+    formData.append('phuongThucThanhToan', phuongThucTT);
+
+    fetch('../donhang/add_xuathang.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Server response:", data);
+        if (data.status === 'success') {
+            // Gán mã phiếu xuất vào modal
+            document.getElementById('orderCode').innerHTML = "Mã phiếu xuất: <strong>" + data.maPhieuXuat + "</strong>";
+            document.getElementById('successModal').style.display = 'block';
+
+            // Tự động chuyển sau 1 giây
+            setTimeout(() => {
+                window.location.href = "../dathang/dathang.php";
+            }, 1000); 
+        } else {
+            alert("Có lỗi xảy ra: " + data.message);
+        }
+    })
+    .catch(error => console.error("Fetch error:", error));
+});
+</script>

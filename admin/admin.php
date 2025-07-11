@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../views/login.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -16,7 +24,7 @@
         <div class="sidebar d-flex flex-column p-3">
             <div class="d-flex align-items-center border-bottom pb-3 mb-3">
                 <div class="admin-info">
-                <img src="../images/logo.jpg" alt="Admin">
+                <img  src="../images/logo.jpg" alt="Admin">
                     <span>Admin</span>
                 </div>
             </div>
@@ -29,8 +37,8 @@
             <a href="quanlydonhang.php"><i class="fas fa-shopping-cart me-2"></i> Quản lý đơn hàng</a>
             <a href="quanlychat.php"><i class="fas fa-comments me-2"></i> Chat với KH</a>
             <a href="doanhthu.php"><i class="fas fa-chart-line me-2"></i> Thống kê doanh thu</a>
-            <a href="../actions/logout.php"><i class="fas fa-store me-2"></i> Trang bán hàng</a>
-            <a href="../views/login.php"><i class="fas fa-sign-out-alt me-2"></i> Đăng xuất</a>
+            <a href="../views/home.php"><i class="fas fa-store me-2"></i> Trang bán hàng</a>
+            <a href="../actions/logout.php"><i class="fas fa-sign-out-alt me-2"></i> Đăng xuất</a>
         </div>
         
         <!-- Main Content -->
@@ -38,15 +46,14 @@
             <header class="navbar navbar-expand-lg navbar-dark bg-dark mt-[-55]">
                 <div class="container">
                     <a class="navbar-brand" href="#">
-                        <img src="../images/logo.jpg" alt="Logo" width="40" height="40" class="d-inline-block align-text-top rounded-circle">
+                        <img src="../images/logo.jpg" alt="Logo" id="logo" width="40" height="40" class="d-inline-block align-text-top rounded-circle">
                     </a>
                     <div class="d-flex align-items-center">
-                        <span class="text-white me-3">Xin chào, <strong>Admin</strong></span>
+                        <span class="text-white me-3">Xin chào, <strong><?php echo isset($_SESSION['user_hoten']) ? htmlspecialchars($_SESSION['user_hoten']) : 'Chưa đăng nhập'; ?></strong></span>
                         <a href="../actions/logout.php" class="btn btn-danger">Đăng xuất</a>
                     </div>
                 </div>
             </header>
-
             <div class="container " style="margin-top: 70px;">
                 <h1 class="text-center text-6xl font-extrabold drop-shadow-xl mb-4 rainbow-text">
                     TRANG QUẢN TRỊ VIÊN Phạm Gia Bảo
@@ -195,6 +202,19 @@ header.navbar::after {
 
 .card:hover img {
     transform: scale(1.1); /* Phóng to 10% */
+}
+@keyframes rotateY360 {
+    from {
+        transform: rotateY(0deg);
+    }
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+#logo {
+    animation: rotateY360 2s linear infinite;
+    transform-style: preserve-3d;
 }
 
 </style>

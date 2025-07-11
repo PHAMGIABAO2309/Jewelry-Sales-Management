@@ -1,0 +1,94 @@
+.overlay-effect {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        120deg,
+        rgba(255, 0, 0, 0.3) 10%,   /* Đỏ */
+        rgba(255, 165, 0, 0.3) 20%, /* Cam */
+        rgba(255, 255, 0, 0.3) 30%, /* Vàng */
+        rgba(0, 128, 0, 0.3) 40%,   /* Lục */
+        rgba(0, 0, 255, 0.3) 50%,   /* Lam */
+        rgba(75, 0, 130, 0.3) 60%,  /* Chàm */
+        rgba(238, 130, 238, 0.3) 70%, /* Tím */
+        rgba(255, 255, 255, 0) 80%  /* Mờ dần */
+    );
+    background-size: 400% 400%;  /* Tăng kích thước nền để tạo sự biến đổi */
+    animation: shine 3s ease-in-out infinite, randomMove 5s ease-in-out infinite;  /* Tạo thêm hiệu ứng chuyển động ngẫu nhiên */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    mix-blend-mode: screen;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Hover để hiện hiệu ứng */
+.group:hover .overlay-effect {
+    opacity: 1;
+}
+
+/* Animation ánh sáng chạy ngang */
+@keyframes shine {
+    0% {
+        background-position: -100% 0;
+    }
+    100% {
+        background-position: 100% 0;
+    }
+}
+
+/* Animation chuyển động ngẫu nhiên cho các màu */
+@keyframes randomMove {
+    0% {
+        transform: translateX(0) rotate(0deg);
+    }
+    25% {
+        transform: translateX(10%) rotate(45deg);
+    }
+    50% {
+        transform: translateX(-10%) rotate(-45deg);
+    }
+    75% {
+        transform: translateX(15%) rotate(90deg);
+    }
+    100% {
+        transform: translateX(0) rotate(180deg);
+    }
+}
+
+@keyframes curveFlyUpRight {
+    0% {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    
+    100% {
+      top: 5%;
+      left: 95%;
+      transform: translate(-50%, -50%) scale(0.8) rotate(0deg);
+      opacity: 0;
+    }
+  }
+  /* Hiệu ứng dấu tích */
+  @keyframes checkmarkAnimation {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  /* Áp dụng animation cho dấu tích */
+  .checkmark {
+    animation: checkmarkAnimation 0.6s ease-out forwards;
+  }
+  #favorite-alert.animate {
+    animation: curveFlyUpRight 2s ease-in-out forwards;
+  }

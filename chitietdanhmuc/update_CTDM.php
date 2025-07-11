@@ -1,6 +1,6 @@
 <?php
 session_start();
-include dirname(__DIR__) . '/database/connect.php';
+include '../database/connect.php'; 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["MaCTDM"], $_POST["MaDM"], $_POST["TenCTDM"], $_POST["MoTa"])) {

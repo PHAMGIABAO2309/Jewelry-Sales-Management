@@ -202,7 +202,7 @@ CREATE TABLE `tinnhan` (
   `MaNguoiNhan` varchar(255) DEFAULT NULL,
   `NoiDung` text NOT NULL,
   `ThoiGian` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `tinnhan`
@@ -352,7 +352,7 @@ CREATE TABLE `xuathang` (
   `MaND` varchar(255) DEFAULT NULL,
   `MaPhieuXuat` varchar(20) DEFAULT NULL,
   `PhuongThucThanhToan` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `xuathang`

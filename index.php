@@ -16,29 +16,16 @@ $sql = "
     ORDER BY TongSoLuong DESC
 ";
 $result = mysqli_query($conn, $sql); 
-
-// Lấy giá trị tìm kiếm từ input người dùng (tránh SQL Injection)
-$search_value = isset($_GET['search']) ? trim($_GET['search']) : "";
-
-// Chuẩn bị truy vấn
-$sql_search = "SELECT MaSP, TenSP, Gia, SoLuong FROM sanpham 
-               WHERE TenSP LIKE ? OR MaSP = ? OR Gia = ?";
-
-$stmt = mysqli_prepare($conn, $sql_search);
-$search_param = "%$search_value%";
-mysqli_stmt_bind_param($stmt, "ssi", $search_param, $search_value, $search_value);
-mysqli_stmt_execute($stmt);
-$result_search = mysqli_stmt_get_result($stmt); 
 ?>
 
 <html lang="en">
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Jewelry Store</title>
+  <title> Gia Bảo Jewelry </title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-  <link rel="icon" type="image/png" href="https://storage.googleapis.com/a1aa/image/idUd40l_cpmB-xqRpUgornlkLqPLLy0mvYxRHI7Vcd8.jpg">
+  <link rel="icon" type="image/png" href="images/logo.jpg">
   <link rel="stylesheet" href="assets/navbar.css">
   <script src="handle/dropdownbosuutap.js"></script>
   <script src="handle/dropdowndongtrangsuc.js"></script>
@@ -56,10 +43,10 @@ $result_search = mysqli_stmt_get_result($stmt);
 
         <div class="flex items-center space-x-4">
             <div class="relative">
-                <form method="GET" class="w-full ">
-                    <input class="border rounded-full p-2 w-96 pl-10 " 
+                <form method="GET" action="views/timkiem.php" class="w-full">
+                    <input class="border rounded-full p-2 w-96 pl-10" 
                         placeholder="Tìm Sản Phẩm: Ví dụ: kiềng, dây chuyền..." 
-                        type="text" name="search" value="<?= htmlspecialchars($search_value) ?>" />
+                        type="text" name="search"/>
                     <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 mt-[-6]"></i>
                 </form>
             </div>
@@ -103,13 +90,12 @@ $result_search = mysqli_stmt_get_result($stmt);
         </div>
         
         <h2 class="text-center text-2xl font-bold mt-10 p-2">
-            <?= empty($search_value) ? "SẢN PHẨM BÁN CHẠY TRONG TUẦN" : "KẾT QUẢ TÌM KIẾM" ?>
+            SẢN PHẨM BÁN CHẠY TRONG TUẦN
         </h2>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mt-2">
             <?php 
-            // Nếu có từ khóa tìm kiếm thì dùng kết quả từ truy vấn tìm kiếm
-            $data = !empty($search_value) ? $result_search : $result;
-            while ($row = mysqli_fetch_assoc($data)) { ?>
+            
+            while ($row = mysqli_fetch_assoc($result)) { ?>
                 <div class="text-center">
                     <div class="group relative">
                         <img alt="<?= $row['TenSP']; ?>" class="mx-auto rounded-lg" height="150" 

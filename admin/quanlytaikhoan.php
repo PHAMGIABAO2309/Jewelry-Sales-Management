@@ -4,6 +4,11 @@ include '../managerchat/listchat.php';
 
 $query = "SELECT MaND, HoTen, MatKhau, Email, NgaySinh, DiaChi, Phai, avt FROM nguoidung";
 $result = mysqli_query($conn, $query);
+
+$countQuery = "SELECT COUNT(*) AS total FROM nguoidung"; // Thay 'users' bằng tên bảng thực tế của bạn
+$resultCount = mysqli_query($conn, $countQuery);
+$rowCount = mysqli_fetch_assoc($resultCount);
+$totalAccounts = $rowCount['total'];
 ?>
 <html lang="vi">
 <head>
@@ -46,6 +51,9 @@ $result = mysqli_query($conn, $query);
         <div class="p-4 bg-white w-[calc(100%-250px)] h-screen overflow-y-auto">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-3xl font-extrabold text-gray-800">Quản lý tài khoản</h2>
+                <h2 class="text-2xl font-extrabold text-gray-800">
+                    Tổng số tài khoản: <span class="text-red-500"><?= $totalAccounts ?></span>
+                </h2>
             </div>
             <div class=" rounded-lg shadow-md flex-grow md:w-[100%] w-full">
                 <table class="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden text-center">
@@ -64,7 +72,6 @@ $result = mysqli_query($conn, $query);
                     </thead>
                     <tbody class="divide-y divide-gray-200">
                     <?php
-                    if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             // Xác định vai trò dựa trên MaND
                             if (strpos($row['MaND'], 'Admin') !== false) {
@@ -75,28 +82,25 @@ $result = mysqli_query($conn, $query);
                                 $vaiTro = 'Không xác định';
                             }
                             $avatar = !empty($row['avt']) ? '../' . $row['avt'] : '../images/macdinh.jpg';
-                            echo '<tr class="hover:bg-blue-300 transition">';
-                            echo '<td class="py-4 px-4 break-words">' . $row['MaND'] . '</td>';
-                            echo '<td class="py-4 px-2">';
-                            echo '<img class="w-full h-55 rounded-full border-2 border-gray-300 mx-auto" src="' . $avatar . '" alt="Avatar">';
-                            echo '</td>';
-                            echo '<td class="py-4 px-6 font-medium text-gray-700  whitespace-nowrap break-words">' . $row['HoTen'] . '</td>';
-                            echo '<td class="py-4 px-4 text-gray-600 break-words">' . $row['Email'] . '</td>';
-                            echo '<td class="py-4 px-6 font-semibold text-indigo-600  whitespace-nowrap break-words">' . $vaiTro . '</td>';
-                            echo '<td class="py-4 px-4 text-gray-600 break-words">' . $row['DiaChi'] . '</td>';
-                            echo '<td class="py-4 px-4 text-gray-600 break-words">' . $row['Phai'] . '</td>';
-                            echo '<td class="py-4 px-6 text-gray-600 text-lg whitespace-nowrap break-words">' . date("d-m-Y", strtotime($row['NgaySinh'])) . '</td>';
-                            echo '<td class="py-4 px-4 flex justify-center mt-2">';
-                            echo '<button class="text-red-500 hover:text-red-700" onclick="deleteUser(\'' . $row['MaND'] . '\')" title="Xóa tài khoản">';
-                            echo '<i class="fas fa-trash text-2xl"></i>';
-                            echo '</button>';
-                            echo '</td>';
-                            echo '</tr>';
-                        }
-                    } else {
-                        echo '<tr><td colspan="9" class="text-center py-4">Không có dữ liệu</td></tr>';
-                    }
                     ?>
+                            <tr class="hover:bg-blue-300 transition">
+                                <td class="py-4 px-4 break-words"><?= $row['MaND'] ?></td>
+                                <td class="py-4 px-2">
+                                    <img class="w-full h-55 rounded-full border-2 border-gray-300 mx-auto" src="<?= $avatar ?>" alt="Avatar">
+                                </td>
+                                <td class="py-4 px-6 font-medium text-gray-700 whitespace-nowrap break-words"><?= $row['HoTen'] ?></td>
+                                <td class="py-4 px-4 text-gray-600 break-words"><?= $row['Email'] ?></td>
+                                <td class="py-4 px-6 font-semibold text-indigo-600 whitespace-nowrap break-words"><?= $vaiTro ?></td>
+                                <td class="py-4 px-4 text-gray-600 break-words"><?= $row['DiaChi'] ?></td>
+                                <td class="py-4 px-4 text-gray-600 break-words"><?= $row['Phai'] ?></td>
+                                <td class="py-4 px-6 text-gray-600 text-lg whitespace-nowrap break-words"><?= date("d-m-Y", strtotime($row['NgaySinh'])) ?></td>
+                                <td class="py-4 px-4 flex justify-center mt-2">
+                                    <button class="text-red-500 hover:text-red-700" onclick="deleteUser('<?= $row['MaND'] ?>')" title="Xóa tài khoản">
+                                        <i class="fas fa-trash text-2xl"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>

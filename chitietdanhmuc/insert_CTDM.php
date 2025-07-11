@@ -1,5 +1,5 @@
 <?php
-include dirname(__DIR__) . '/database/connect.php';
+include '../database/connect.php'; 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $tenCTDM = trim($_POST["tenCTDM"]);

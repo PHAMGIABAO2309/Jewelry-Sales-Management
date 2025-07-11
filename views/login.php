@@ -9,9 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn->connect_error) {
         die("Lỗi kết nối: " . $conn->connect_error);
     }
-
-    // Kiểm tra thông tin đăng nhập
-    $stmt = $conn->prepare("SELECT MaND, TenND, MatKhau, NgaySinh,DiaChi, avt FROM nguoidung WHERE Email = ?");
+    
+    $stmt = $conn->prepare("SELECT MaND, TenND, MatKhau, NgaySinh,DiaChi, avt, Phai, HoTen FROM nguoidung WHERE Email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -27,6 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_dob'] = $user['NgaySinh']; // Lưu ngày sinh vào session
             $_SESSION['user_avt'] = $user['avt']; // Lưu avatar vào session
             $_SESSION['user_diachi'] = $user['DiaChi'];
+            $_SESSION['user_phai'] = $user['Phai'];
+            $_SESSION['user_hoten'] = $user['HoTen'];
 
             // Lưu thông báo đăng nhập thành công
             $_SESSION['message'] = "Đăng nhập thành công!";
@@ -34,8 +35,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Đảm bảo session được lưu trước khi chuyển trang
             session_write_close();
-            header("Location: ../views/home.php");
+            if (strtolower($user['MaND']) === 'admin') {
+                header("Location: ../admin/admin.php");
+            } else {
+                header("Location: ../views/home.php");
+            }
             exit();
+
         } else {
             $_SESSION['message'] = "Mật khẩu không đúng!";
             $_SESSION['type'] = "error";
@@ -44,9 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['message'] = "Email không tồn tại!";
         $_SESSION['type'] = "error";
     }
-
-    $stmt->close();
-    $conn->close();
+    
 }
 ?>
 

@@ -29,7 +29,7 @@ if (!empty($tuNgay) && !empty($tuThang) && !empty($tuNam) && !empty($denNgay) &&
             FROM xuathang
             WHERE NgayXuatHang >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
             GROUP BY DATE(NgayXuatHang)
-            ORDER BY NgayXuatHang ASC
+            ORDER BY NgayXuatHang desc
             LIMIT 7";
 }
 
@@ -46,6 +46,13 @@ if ($result->num_rows > 0) {
         $loiNhuan[] = $row['LoiNhuan'];
     }
 }
+$sql_banchay = "SELECT xh.MaSP, sp.TenSP, sp.Gia, sp.SoLuong, SUM(xh.SoLuong) AS TongSoLuong, MAX(xh.NgayXuatHang) AS NgayXuatGanNhat
+        FROM sanpham sp
+        JOIN xuathang xh ON sp.MaSP = xh.MaSP
+        GROUP BY xh.MaSP, sp.TenSP, sp.Gia, sp.SoLuong
+        ORDER BY TongSoLuong DESC
+        LIMIT 3";
+$result_banchay = $conn->query($sql_banchay);
 
 // Chuyển đổi mảng PHP thành JSON để dùng trong JavaScript
 $labels_json = json_encode($labels);
@@ -204,7 +211,29 @@ $conn->close();
                         </div>
                     </div>
                 </div>
-                
+            </div>
+            <!-- top 3 san pham ban chay -->
+            <div class="w-96 border border-gray-300 rounded shadow mt-[-10] ml-8">
+                <div class="flex items-center justify-between bg-gray-100 border-b border-gray-300 p-2">
+                    <h2 class="text-sm font-semibold">Top 3 sản phẩm bán chạy</h2>
+                </div>
+                <?php while ($row = $result_banchay->fetch_assoc()): ?>
+                    <?php $imagePath = "../images/" . $row["MaSP"] . ".jpg"; ?>
+                    <div class="flex items-center p-4">
+                        <img alt="Product image" class="w-12 h-12 mr-4" src="<?= $imagePath ?>" width="50" height="50"/>
+                        <div>
+                            <a class="text-blue-600 text-sm font-semibold" href="#">
+                                <?= $row["TongSoLuong"] ?> Lượt mua
+                            </a>
+                            <p class="text-gray-500 text-sm">
+                                <?= $row["TenSP"] ?>
+                            </p>
+                        </div>
+                        <div class="ml-auto bg-orange-500 text-white text-sm font-semibold py-1 px-2 rounded flex items-center">
+                            <?= number_format($row["Gia"]) ?> <span class="ml-1">đ</span>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
             </div>
         </div>
     </div>

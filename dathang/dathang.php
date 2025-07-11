@@ -27,25 +27,27 @@ include '../actions/dropdownloaisanpham.php';
         <!-- Logo và Danh mục sản phẩm -->
         <div class="flex items-center space-x-4 relative">
             <a href="../views/home.php">
-                <img alt="Logo" class="h-8 " height="30" src="https://storage.googleapis.com/a1aa/image/RR8CRsz-B4mwtszDDQi_5Jz4xLoLiQOI1N6dCsXCOP0.jpg" width="30"/>
+                <img id="logo" alt="Logo" class="h-16 w-16 rounded-full" src="../images/logo.jpg"/>
             </a>
             <div class="relative"><?php echo getDanhMuc($conn); ?></div>
         </div>
         <!-- Ô tìm kiếm + Thông tin user -->
         <div class="flex items-center space-x-4 ml-auto">
             <div class="relative">
-                <input class="border rounded-full p-2 w-96 pl-10" placeholder="Tìm Sản Phẩm: Ví dụ: kiềng, dây chuyền..." type="text" />
-                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <form method="GET" action="../views/timkiem.php" class="w-full">
+                    <input name="search" class="border rounded-full p-2 w-96 pl-10 mt-2" placeholder="Tìm Sản Phẩm: Ví dụ: kiềng, dây chuyền..." type="text" />
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 mt-[-4px]"></i>
+                </form>
             </div>
 
             <?php if (isset($_SESSION['user_name']) && isset($_SESSION['user_id'])): ?>
-                <a id="userDropdown" class="flex items-center space-x-1 cursor-pointer" href="#">
+                <a id="userDropdown" class="flex items-center space-x-1 cursor-pointer mt-[-10px]" href="#">
                     <i class="fas fa-user"></i>
                     <span><?= $_SESSION['user_name']; ?></span>
                     <!-- <small>ID<?= $_SESSION['user_id']; ?></small> Hiển thị ID -->
                 </a>
                 <?php include '../actions/dropdownprofile.php'; ?>
-                <a class="flex items-center space-x-1 text-red-500" href="../actions/logout.php"><i class="fas fa-sign-out-alt"></i><span>Đăng Xuất</span></a>
+                <a class="flex items-center space-x-1 text-red-500 mt-[-10px]" href="../actions/logout.php"><i class="fas fa-sign-out-alt"></i><span>Đăng Xuất</span></a>
             <?php else: ?>
                 <a class="flex items-center space-x-1" href="login.php"><i class="fas fa-user"></i><span>Đăng Nhập</span></a>
             <?php endif; ?>
@@ -129,7 +131,7 @@ include '../actions/dropdownloaisanpham.php';
             <?php $_SESSION['tongThanhToan'] = $tongThanhToan ?? 0; ?>
             <!-- Tong Tien Phai Tra -->
             <div class="mt-6 flex justify-between items-center border-t pt-4">
-                <span class="text-gray-700 text-lg font-medium">Tổng thanh toán</span>
+                <span class="text-gray-700 text-lg font-medium">Tổng chi tiêu </span>
                 <span class="text-red-500 text-2xl font-bold">
                     <?php echo number_format($_SESSION['tongThanhToan'], 0, ',', '.'); ?> VNĐ
                 </span>

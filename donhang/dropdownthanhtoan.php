@@ -33,13 +33,13 @@
 
             <!-- Nội dung thanh toán -->
             <div class="flex justify-center items-center mb-4">
-    <div class="bg-gray-200 px-4 py-2 rounded-lg shadow-inner">
-        <span id="captchaText" class="text-gray-700 text-lg font-mono">ejcQOD</span>
-    </div>
-    <button id="refreshCaptcha" class="ml-3 text-blue-600 hover:text-blue-800 transition">
-        <i class="fas fa-sync-alt text-2xl"></i>
-    </button>
-</div>
+                <div class="bg-gray-200 px-4 py-2 rounded-lg shadow-inner">
+                    <span id="captchaText" class="text-gray-700 text-lg font-mono">ejcQOD</span>
+                </div>
+                <button id="refreshCaptcha" class="ml-3 text-blue-600 hover:text-blue-800 transition">
+                    <i class="fas fa-sync-alt text-2xl"></i>
+                </button>
+            </div>
             <!-- Nhập nội dung -->
             <div class="flex justify-center mb-4">
                 <input id="captchaInput" type="text" class="border border-gray-300 rounded-lg p-3 w-full max-w-xs shadow-inner" placeholder="Nhập nội dung">
@@ -102,8 +102,8 @@
 
                 // Đổi nội dung từ "Thanh toán khi nhận hàng" thành "Thanh toán online"
                 let paymentText = document.querySelector("span.phuongthucthanhtoan");
-                if (paymentText && paymentText.textContent.trim() === "Thanh toán khi nhận hàng") {
-                    paymentText.textContent = "Thanh toán online";
+                if (paymentText && paymentText.textContent.trim() === "Thanh toán tiền mặt") {
+                    paymentText.textContent = "Thanh Toán Online";
                 }
             });
         } else {

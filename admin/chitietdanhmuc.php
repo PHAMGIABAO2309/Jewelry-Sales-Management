@@ -167,13 +167,6 @@ $result_chitietdanhmuc = $conn->query($sql_chitietdanhmuc);
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
-
-
-
-
-
-
 <script>
 $(document).ready(function () {
     // Khi chọn danh mục thi hien chi tiet danh muc tuong ung
